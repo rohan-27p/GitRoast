@@ -4,15 +4,10 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
+    'MONGODB_URI is not defined inside .env.local'
   );
 }
 
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections from Smultiplying during
- * development server reloads.
- */
 let cached = global.mongoose;
 
 if (!cached) {
@@ -43,5 +38,8 @@ async function connectDB() {
 
   return cached.conn;
 }
+
+//this is what the @auth/mongodb-adapter needs
+export const clientPromise = connectDB().then(conn => conn.connection.getClient());
 
 export default connectDB;
