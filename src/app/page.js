@@ -335,7 +335,6 @@ export default function Home() {
                       <div className="text-gray-500 text-sm">
                         <p>🔥 Ready to roast some repositories!</p>
                         <p>📝 Enter a GitHub repo URL above and hit that roast button.</p>
-                        <p>📚 Your roast history will stack up here for easy scrolling.</p>
                       </div>
                     </div>
                   )}
@@ -388,29 +387,41 @@ export default function Home() {
                             </div>
                           </div>
 
-                          <div className="space-y-1 pl-4">
-                            {entry.roastLines.map((roast, index) => {
-                              // Calculate delay: each line waits for previous ones to finish
-                              // Assuming ~1.5 seconds per line (animation + pause)
-                              const delay = index * 2000;
+                         {/* Render roast history */}
+                        {roastHistory.map((entry) => (
+                          <div key={entry.id} className="mb-6 border-b border-gray-800 pb-4 last:border-b-0">
+                            {/* ... code for 'command' and 'error' types ... */}
 
-                              return (
-                                <TypeAnimation
-                                  key={`${entry.id}-${index}`}
-                                  sequence={[
-                                    delay, // Wait for previous lines
-                                    `🔥 ${roast}`,
-                                    1000 // Pause after this line
-                                  ]}
-                                  wrapper="div"
-                                  speed={60}
-                                  className="text-orange-300 text-sm"
-                                  cursor={false}
-                                  repeat={0}
-                                />
-                              );
-                            })}
+                            {entry.type === 'roast' && (
+                              <div className="mt-2 space-y-3">
+                                <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+                                  {/* ... code for roast header (repo name, stars, AI badge, share button) ... */}
+                                </div>
+
+                                {/* --- START OF CHANGES --- */}
+                                <div className="space-y-1 pl-4">
+                                  <TypeAnimation
+                                    key={entry.id} // Use entry.id as the key for the single animation
+                                    sequence={
+                                      // Flatten the roastLines array into the sequence format
+                                      entry.roastLines.flatMap((roast, index) => [
+                                        `🔥 ${roast}`, // The text to type
+                                        1000,         // Pause for 1 second after typing this line
+                                      ])
+                                    }
+                                    wrapper="div"   // Render the whole sequence in one div
+                                    speed={60}
+                                    className="text-orange-300 text-sm whitespace-pre-line" // Use whitespace-pre-line for newlines
+                                    cursor={true}  // You might want the cursor visible while typing
+                                    repeat={0}     // Don't repeat the animation
+                                    // Omit the 'delay' logic completely
+                                  />
+                                </div>
+                                {/* --- END OF CHANGES --- */}
+                              </div>
+                            )}
                           </div>
+                        ))}
                         </div>
                       )}
                     </div>
