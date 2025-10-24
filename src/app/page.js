@@ -102,7 +102,7 @@ function Footer() {
               </span>
             </div>
             <p className="text-gray-400 text-sm max-w-md">
-              The most brutally honest code reviewer on the internet. We roast your repos so you don't have to.
+              The most brutally honest code reviewer on the internet. We roast your repos so you don&apos;t have to.
             </p>
           </div>
 
@@ -238,7 +238,7 @@ export default function Home() {
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-6xl md:text-7xl font-extrabold mb-6">
               <span className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
-                Your Code's
+                Your Code&apos;s
               </span>
               <br />
               <span className="text-white">Worst Critic</span>

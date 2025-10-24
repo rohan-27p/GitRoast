@@ -394,7 +394,7 @@ export default function Dashboard() {
                     <div className="text-6xl mb-4">🔥</div>
                     <h3 className="text-2xl font-bold text-white mb-2">No roasts yet</h3>
                     <p className="text-gray-400 mb-6">
-                      You haven't roasted any repositories yet. Time to start the carnage!
+                      You haven&apos;t roasted any repositories yet. Time to start the carnage!
                     </p>
                     <Link
                       href="/"

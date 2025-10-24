@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "GitRoast",
-  description: "Your code's worst critic.", 
+  description: "Your code&apos;s worst critic.", 
 };
 
 export default async function RootLayout({ children }) {
