@@ -364,7 +364,7 @@ export default function Dashboard() {
                     <div className="text-6xl mb-4">📁</div>
                     <h3 className="text-2xl font-bold text-white mb-2">No repositories found</h3>
                     <p className="text-gray-400 mb-6">
-                      We couldn't find any public repositories on your GitHub account.
+                      We couldn&apos;t find any public repositories on your GitHub account...
                     </p>
                     <Link
                       href="/"
