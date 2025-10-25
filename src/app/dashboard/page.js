@@ -137,14 +137,26 @@ function RoastCard({ roast }) {
     });
   };
 
-  const shareRoast = async () => {
+  const shareRoast = async (roastData) => {
     try {
-      const shareUrl = `${window.location.origin}/share/${roast.shareId || 'temp'}`;
-      await navigator.clipboard.writeText(shareUrl);
-      // You could add a toast notification here
-      alert('Share link copied to clipboard!');
+      // Create a shareable link
+      const res = await fetch('/api/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roastData }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to create share link');
+      }
+
+      await navigator.clipboard.writeText(data.shareUrl);
+      alert('🔥 Share link copied to clipboard! Spread the roast!');
     } catch (err) {
-      console.error('Failed to copy share link:', err);
+      console.error('Failed to create share link:', err);
+      alert('Failed to create share link. Try again later.');
     }
   };
 

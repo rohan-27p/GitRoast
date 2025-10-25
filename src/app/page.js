@@ -183,7 +183,11 @@ export default function Home() {
         ...data,
         isAIRoast: currentIsAi,
         timestamp: new Date(),
-        repoUrl: currentRepoUrl
+        repoUrl: currentRepoUrl,
+        // Ensure we have the data needed for sharing
+        repoName: data.repoName,
+        stars: data.stars,
+        roastLines: data.roastLines
       };
 
       setRoastHistory(prev => [...prev, roastEntry]);
@@ -215,11 +219,24 @@ export default function Home() {
     if (!roastData) return;
 
     try {
-      const shareUrl = `${window.location.origin}/share/${roastData.shareId || 'temp'}`;
-      await navigator.clipboard.writeText(shareUrl);
-      alert('Share link copied to clipboard!');
+      // Create a shareable link
+      const res = await fetch('/api/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roastData }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to create share link');
+      }
+
+      await navigator.clipboard.writeText(data.shareUrl);
+      alert('🔥 Share link copied to clipboard! Spread the roast!');
     } catch (err) {
-      console.error('Failed to copy share link:', err);
+      console.error('Failed to create share link:', err);
+      alert('Failed to create share link. Try again later.');
     }
   };
 
